@@ -1,0 +1,26 @@
+{
+  "folders": [
+    {
+      "path": "Backend"
+    },
+    {
+      "path": "Frontend"
+    },
+    {
+      "name": "Project root",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+
+      "Backend": true,
+      "Frontend": true
+    }
+  }
+}
