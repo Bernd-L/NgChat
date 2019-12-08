@@ -5,8 +5,11 @@ import {
   OnInit,
   AfterViewInit
 } from "@angular/core";
-import { WebSocketSubject } from "rxjs/observable/dom/WebSocketSubject";
+import { WebSocketSubject } from "rxjs/webSocket";
 
+/**
+ * The messages exchanged between participants
+ */
 export class Message {
   constructor(
     public sender: string,

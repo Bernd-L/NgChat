@@ -1,4 +1,8 @@
+<!-- Everything is inside of here -->
 <div class="container">
+  <!--
+
+    The "enter your name" box -->
   <div class="header">
     <mat-form-field>
       <input
@@ -10,6 +14,10 @@
       />
     </mat-form-field>
   </div>
+  <!--
+
+    The messages view
+   -->
   <div *ngIf="!!sender" #viewer class="body">
     <div class="viewer">
       <div
@@ -17,7 +25,11 @@
         *ngFor="let msg of serverMessages"
         [ngClass]="{ bold: msg.isBroadcast, others: !isMine(msg) }"
       >
-        <div class="badge" [style.backgroundColor]="getSenderColor(msg.sender)">
+        <div
+          class="badge"
+          [style.backgroundColor]="getSenderColor(msg.sender)"
+          title="{{ msg.sender }}"
+        >
           {{ getSenderInitials(msg.sender) }}
         </div>
         <div
@@ -30,8 +42,17 @@
       </div>
     </div>
   </div>
+
+  <!--
+
+    The bottom bar
+   -->
   <div *ngIf="!!sender" class="footer">
     <form (submit)="send()">
+      <!--
+
+        A place to enter a message
+       -->
       <mat-form-field>
         <input
           name="clientMessage"
@@ -41,9 +62,19 @@
           [(ngModel)]="clientMessage"
         />
       </mat-form-field>
+
+      <!--
+
+        The submit button
+       -->
       <button mat-fab type="submit">
         <i class="material-icons">send</i>
       </button>
+
+      <!--
+
+        The broadcast button
+       -->
       <button
         mat-fab
         (click)="toggleIsBroadcast()"
@@ -55,4 +86,6 @@
     </form>
   </div>
 </div>
+
+<!-- The unused router outlet -->
 <router-outlet></router-outlet>
