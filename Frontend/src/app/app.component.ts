@@ -84,7 +84,9 @@ export class AppComponent implements AfterViewInit {
    */
   public send(): void {
     // Disallow empty messages
-    if (this.clientMessage.length === 0) return;
+    if (this.clientMessage.length === 0) {
+      return;
+    }
 
     // Make a new Message object
     const message = new Message(
@@ -106,10 +108,20 @@ export class AppComponent implements AfterViewInit {
     this.scroll();
   }
 
+  /**
+   * Determines if any given message was written by the user themselves
+   *
+   * @param message The message to be analyzed
+   */
   public isMine(message: Message): boolean {
     return message && message.sender === this.sender;
   }
 
+  /**
+   * Extracts the initials of a sender
+   *
+   * @param sender The sender of the message
+   */
   public getSenderInitials(sender: string): string {
     return sender && sender.substring(0, 2).toLocaleUpperCase();
   }
