@@ -26,20 +26,44 @@ export class Message {
 export class AppComponent implements AfterViewInit {
   @ViewChild("viewer", { static: false }) private viewer: ElementRef;
 
+  /**
+   * An array of all messages
+   */
   public serverMessages = new Array<Message>();
 
+  /**
+   * The message currently written in the text box
+   */
   public clientMessage = "";
+
+  /**
+   * The current state of the broadcast button
+   */
   public isBroadcast = false;
+
+  /**
+   * The name of the user chosen on top of the application
+   */
   public sender = "";
 
+  /**
+   * An RxJs Subject of the WebSocket
+   */
   private socket$: WebSocketSubject<Message>;
 
   constructor() {
+    // Establish a new WebSocketSubject which connects to the server
     this.socket$ = new WebSocketSubject("ws://localhost:8999");
 
+    // Subscribe to the subject
     this.socket$.subscribe(
+      // When a new message is received display it and scroll down
       message => this.serverMessages.push(message) && this.scroll(),
+
+      // Log errors
       err => console.error(err),
+
+      // Log the end of the stream
       () => console.warn("Completed!")
     );
   }
@@ -48,20 +72,37 @@ export class AppComponent implements AfterViewInit {
     this.scroll();
   }
 
+  /**
+   * Inverts the broadcast flag
+   */
   public toggleIsBroadcast(): void {
     this.isBroadcast = !this.isBroadcast;
   }
 
+  /**
+   * Transmits messages to the server
+   */
   public send(): void {
+    // Disallow empty messages
+    if (this.clientMessage.length === 0) return;
+
+    // Make a new Message object
     const message = new Message(
       this.sender,
       this.clientMessage,
       this.isBroadcast
     );
 
+    // Append this message to the messages array
     this.serverMessages.push(message);
+
+    // Push the message to the server
     this.socket$.next(message);
+
+    // Reset the message field
     this.clientMessage = "";
+
+    // Scroll to the bottom of the message list
     this.scroll();
   }
 
@@ -121,3 +162,12 @@ export class AppComponent implements AfterViewInit {
     return (1 + Math.sin(Math.PI * t - Math.PI / 2)) / 2;
   }
 }
+
+/*
+
+Author notice:
+
+This program (at least the Frontend) was originally developed by Jonny Fox
+https://medium.com/factory-mind/angular-websocket-node-31f421c753ff
+
+*/

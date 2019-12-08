@@ -67,7 +67,7 @@
 
         The submit button
        -->
-      <button mat-fab type="submit">
+      <button mat-fab type="submit" [disabled]="clientMessage.length === 0">
         <i class="material-icons">send</i>
       </button>
 
