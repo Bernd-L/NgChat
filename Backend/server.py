@@ -15,8 +15,8 @@ class MyServerProtocol(WebSocketServerProtocol):
         print(messages)
 
         # Append the this object to the senders dict if it's not there already
-        if not senders.__contains__(obj.sender):
-            senders[obj.sender] = self
+        if not senders.__contains__(str(self)):
+            senders[str(self)] = self
 
         send_to_everyone(payload, isBinary)
 
@@ -29,8 +29,9 @@ senders = {}
 
 
 def send_to_everyone(payload, isBinary):
-    for sender in senders:
-        sender.sendMessage(payload, isBinary)
+    for k, v in senders.items():
+        v.sendMessage(payload, isBinary)
+        print(v)
 
 
 # Create a factory and set its protocol

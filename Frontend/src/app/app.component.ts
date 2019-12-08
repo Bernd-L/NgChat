@@ -95,8 +95,8 @@ export class AppComponent implements AfterViewInit {
       this.isBroadcast
     );
 
-    // Append this message to the messages array
-    this.serverMessages.push(message);
+    // // Append this message to the messages array
+    // this.serverMessages.push(message);
 
     // Push the message to the server
     this.socket$.next(message);
