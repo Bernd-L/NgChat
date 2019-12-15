@@ -75,18 +75,16 @@
 
         The broadcast button
        -->
-      <button
-        mat-fab
-        (click)="toggleIsBroadcast()"
-        type="button"
-        [ngClass]="{ disabled: !isBroadcast }"
-        *ngIf="false"
-      >
-        <i class="material-icons">speaker_phone</i>
+      <button mat-fab (click)="onEnableCam()" type="button">
+        <i class="material-icons">videocam</i>
       </button>
     </form>
   </div>
 </div>
+
+<br />
+
+<img alt="image here" id="theImageGoesHere" class="theImageGoesHere" />
 
 <!-- The unused router outlet -->
 <router-outlet></router-outlet>

@@ -26,6 +26,8 @@ export class Message {
 export class AppComponent implements AfterViewInit {
   @ViewChild("viewer", { static: false }) private viewer: ElementRef;
 
+  public connection_webcam: WebSocket;
+
   /**
    * An array of all messages
    */
@@ -170,8 +172,21 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Calculate timings for animations
+   */
   private easeInOutSin(t): number {
     return (1 + Math.sin(Math.PI * t - Math.PI / 2)) / 2;
+  }
+
+  public onEnableCam(): void {
+    this.connection_webcam = new WebSocket("ws://localhost:8765");
+
+    // Display images from the server
+    this.connection_webcam.onmessage = e => {
+      document.getElementById("theImageGoesHere").src =
+        "data:image/jpeg;base64," + e.data.toString();
+    };
   }
 }
 
